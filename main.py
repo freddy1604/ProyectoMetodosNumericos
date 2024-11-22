@@ -31,70 +31,33 @@ titulo = tkinter.Label(ventana,text="Proyecto 1er Bimestre \n Métodos Numericos
 #Contenedor para los elementos de informacion
 
 cont_Info = tkinter.Frame(ventana)
-
 cont_Info = tkinter.Frame(ventana,relief="solid")
-
 
 #Aporte interes
 titulo_aporteInicial = tkinter.Label(cont_Info,text="Aporte inicial: ",font=("Arial",13))
 entry_aporteInicial = tkinter.Entry(cont_Info) 
 #Interes anual 
-
-titulo_interesAnual = tkinter.Label(cont_Info,text="In")
-
-#Colocacion del titulo y contenedor 
-titulo.pack(pady=10,fill=tkinter.X)
-cont_Info.pack(pady=10,padx=15,fill=tkinter.BOTH)
-
-#Colocacion de los elementos en el contendor
-titulo_aporteInicial.grid(row=1,column=0)
-entry_aporteInicial.grid(row=1,column=1,padx=50)
-
-
-#asd
-
-# Variables para los radio buttons
-frecuencia_variable = tkinter.StringVar(value="")
-
-# Título para los radio buttons
-titulo_frecuencia = tkinter.Label(ventana, text="Frecuencia:", font=("Arial", 13), bg=RGB_Hexadecimal(255, 250, 250))
-titulo_frecuencia.pack(padx=100, pady=10)
-
-# Frame para organizar los radio buttons en fila
-frame_frecuencia = tkinter.Frame(ventana, bg=RGB_Hexadecimal(255, 250, 250))
-frame_frecuencia.pack(pady=5)
-
-# Crear los radio buttons con bordes y color personalizable
-opciones = [("Semanal", "semanal"), ("Mensual", "mensual"), ("Trimestral", "trimestral"), ("Bimestral", "bimestral")]
-
-for texto, valor in opciones:
-    tkinter.Radiobutton(
-        frame_frecuencia, 
-        text=texto, 
-        value=valor, 
-        variable=frecuencia_variable, 
-        font=("Arial", 12), 
-        bg=RGB_Hexadecimal(255, 250, 250), 
-        relief="solid", 
-        bd=1,  # Borde del recuadro
-        highlightbackground=RGB_Hexadecimal(192, 192, 192),  # Color del borde
-        highlightthickness=1  # Grosor del borde
-    ).pack(side="right", padx=40, pady=5)
-
-
-
-
-titulo_interesAnual = tkinter.Label(cont_Info,text="Interes anual: ",font=("Arial",13)) 
+titulo_interesAnual = tkinter.Label(cont_Info,text="Interes anual",font=("Arial",13))
 entry_interesAnual = tkinter.Entry(cont_Info)
 porcentaje = tkinter.Label(cont_Info,text="%",font=("Arial",13))
 #Aporte semanal 
 titulo_aporteSem = tkinter.Label(cont_Info,text="Aporte Semanal",font=("Arial",13))
 entry_aporteSem = tkinter.Entry(cont_Info)
 
+#Colocacion del titulo y contenedor 
+titulo.pack(pady=10,fill=tkinter.X)
+cont_Info.pack(pady=10,padx=15,fill=tkinter.BOTH)
 
 
 
+# Crear los radio buttons con bordes y color personalizable
+opciones = [("Semanal", "semanal"), ("Mensual", "mensual"), ("Trimestral", "trimestral"), ("Bimestral", "bimestral")]
 
+# Variables para los radio buttons
+frecuencia_variable = tkinter.StringVar(value="")
+
+# Título para los radio buttons
+titulo_frecuencia = tkinter.Label(cont_Info, text="Periodo:", font=("Arial", 13))
 
 
 
@@ -112,5 +75,23 @@ porcentaje.grid(row=2,column=2)
 
 titulo_aporteSem.grid(row=3,column=0,padx=20)
 entry_aporteSem.grid(row=3,column=1,padx=50)
+
+titulo_frecuencia.grid(row=4,column=0,pady=10,padx=70)
+i=0
+for texto, valor in opciones:
+    tkinter.Radiobutton(
+        cont_Info, 
+        text=texto, 
+        value=valor, 
+        variable=frecuencia_variable, 
+        font=("Arial", 12), 
+        bg=RGB_Hexadecimal(255, 250, 250), 
+        relief="solid", 
+        bd=1,  # Borde del recuadro
+        highlightbackground=RGB_Hexadecimal(192, 192, 192),  # Color del borde
+        highlightthickness=1  # Grosor del borde
+    ).grid(row=5,column=i, padx=40, pady=5)
+    i+=1
+
 ventana.mainloop() 
 
