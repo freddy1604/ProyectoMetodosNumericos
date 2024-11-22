@@ -1,4 +1,4 @@
-import interes
+#import interes
 import tkinter 
 
 #Inicializacion de la ventana principal 
@@ -7,10 +7,10 @@ isem = 8/52      # Tasa de interés semanal (%)
 n = 52        # Número de semanas
 asem = 5      # Aporte semanal
 
-final = interes.interes()
+#final = interes.interes()
 
 
-final = interes.interes(v0,isem,n,asem)
+#final = interes.interes(v0,isem,n,asem)
 
 #Devolver de decimal a hexadecimal el espectro RGB
 def RGB_Hexadecimal (rojo:int, verde:int, azul:int): 
@@ -82,8 +82,8 @@ for texto, valor in opciones:
     ).pack(side="right", padx=40, pady=5)
 
 
-ventana.mainloop()
-=======
+
+
 titulo_interesAnual = tkinter.Label(cont_Info,text="Interes anual: ",font=("Arial",13)) 
 entry_interesAnual = tkinter.Entry(cont_Info)
 porcentaje = tkinter.Label(cont_Info,text="%",font=("Arial",13))
