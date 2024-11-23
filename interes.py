@@ -16,7 +16,7 @@ class interes:
         subtermino2 = 0
         for i in range(0,self.n-1): 
             subtermino2 += (1+self.isem)**i 
-            print(subtermino2)
+            #print(subtermino2)
         return termino1+self.asem*subtermino2
     
     

@@ -1,22 +1,38 @@
-#import interes
+import tkinter.messagebox
+import interes
 import tkinter 
 
-#Inicializacion de la ventana principal 
-v0 = 100      # Depósito inicial
-isem = 8/52      # Tasa de interés semanal (%)
-n = 52        # Número de semanas
-asem = 5      # Aporte semanal
 
-#final = interes.interes()
-
-
-#final = interes.interes(v0,isem,n,asem)
 
 #Devolver de decimal a hexadecimal el espectro RGB
 def RGB_Hexadecimal (rojo:int, verde:int, azul:int): 
     colorRGB="#%02x%02x%02x" % (rojo, verde, azul)
     return colorRGB
 
+#Calcular el interes compuesto recopilando todos los datos:
+def CalculoInteresCompuesto():
+    try:
+        v0= float(entry_aporteInicial.get())
+        frecuenciaSeleccionada = frecuencia_variable.get()
+        ianual = float(entry_interesAnual.get())
+
+        if frecuenciaSeleccionada=="":
+            ianual = ianual/12
+        else:
+            ianual = ianual/int(frecuenciaSeleccionada)
+        
+        n = int(entry_NumeroPeriodosTranscurridos.get())
+        asem = float(entry_aporteSem.get())
+        valor_final = interes.interes(v0,ianual,n,asem).valorFinal()
+        resultado_final.configure(text=str(round(valor_final,4)))
+        ventana.update_idletasks()
+    except Exception as e:
+        tkinter.messagebox.showerror("Error","Error al ingresar los datos:\n"+str(e))
+
+
+
+
+#Inicializacion de la ventana principal 
 #Ventana Principal del programa
 ventana = tkinter.Tk() 
 #Confirguracion del tamaño de la ventana
@@ -51,7 +67,7 @@ cont_Info.pack(pady=10,padx=15,fill=tkinter.BOTH)
 
 
 # Crear los radio buttons con bordes y color personalizable
-opciones = [("Semanal", "semanal"), ("Mensual", "mensual"), ("Trimestral", "trimestral"), ("Bimestral", "bimestral")]
+opciones = [("Semanal", 52), ("Mensual", 12), ("Trimestral", 4), ("Bimestral", 6)]
 
 # Variables para los radio buttons
 frecuencia_variable = tkinter.StringVar(value=" ")
@@ -102,7 +118,7 @@ entry_NumeroPeriodosTranscurridos.grid(row=6, column = 1, padx=50)
 
 
 # Botón Calcular 
-boton_calcular = tkinter.Button(cont_Info, text="Calcular", font=("Arial", 13, "bold"), bg=RGB_Hexadecimal(0, 255, 127), relief="raised", command=lambda: print("Cálculo realizado"))
+boton_calcular = tkinter.Button(cont_Info, text="Calcular", font=("Arial", 13, "bold"), bg=RGB_Hexadecimal(0, 255, 127), relief="raised", command=CalculoInteresCompuesto)
 boton_calcular.grid(row=7, column=0, columnspan=4, pady=10)
 
 #Gráfica
@@ -127,8 +143,10 @@ valorfinal = tkinter.Label(cont_Info, text="Valor Final", font=("Arial", 15, "bo
 valorfinal.grid(row=8,column=2,columnspan=2, pady= 10)
 
 #Label resultado final
-resultado_final = tkinter.Label(cont_Info, text="ASDDD", font=("Arial", 16))
+resultado_final = tkinter.Label(cont_Info, text="", font=("Arial", 16))
+dinero = tkinter.Label(cont_Info,text="$",font=("Arial", 16,"bold"))
 resultado_final.grid(row=9,column=2,columnspan=2, pady= 1)
+dinero.grid(row=9,column=3)
 
 # Obtener dimensiones de la pantalla
 ancho_pantalla = ventana.winfo_screenwidth()
