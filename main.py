@@ -20,7 +20,7 @@ def RGB_Hexadecimal (rojo:int, verde:int, azul:int):
 #Ventana Principal del programa
 ventana = tkinter.Tk() 
 #Confirguracion del tamaño de la ventana
-ventana.geometry("750x600")
+ventana.geometry("900x750")
 ventana.config(background=RGB_Hexadecimal(255,250,250))
 ventana.title("Caluculadora de Interes Compuesto") 
 
@@ -54,7 +54,7 @@ cont_Info.pack(pady=10,padx=15,fill=tkinter.BOTH)
 opciones = [("Semanal", "semanal"), ("Mensual", "mensual"), ("Trimestral", "trimestral"), ("Bimestral", "bimestral")]
 
 # Variables para los radio buttons
-frecuencia_variable = tkinter.StringVar(value="")
+frecuencia_variable = tkinter.StringVar(value=" ")
 
 # Título para los radio buttons
 titulo_frecuencia = tkinter.Label(cont_Info, text="Periodo:", font=("Arial", 13))
@@ -71,7 +71,7 @@ entry_aporteInicial.grid(row=1,column=1,padx=50)
 
 titulo_interesAnual.grid(row=2,column=0,pady=20,padx=20)
 entry_interesAnual.grid(row=2,column=1,pady=20,padx=50)
-porcentaje.grid(row=2,column=2)
+porcentaje.grid(row=2,column=1,columnspan=2)
 
 titulo_aporteSem.grid(row=3,column=0,padx=20)
 entry_aporteSem.grid(row=3,column=1,padx=50)
@@ -92,6 +92,61 @@ for texto, valor in opciones:
         highlightthickness=1  # Grosor del borde
     ).grid(row=5,column=i, padx=40, pady=5)
     i+=1
+
+
+#Número de periodos transcurridos
+titulo_NumeroPeriodosTranscurridos = tkinter.Label(cont_Info, text="Número de Periodos Transcurridos:", font=("Arial", 13))
+titulo_NumeroPeriodosTranscurridos.grid(row=6,pady=20,column =0)
+entry_NumeroPeriodosTranscurridos = tkinter.Entry(cont_Info) 
+entry_NumeroPeriodosTranscurridos.grid(row=6, column = 1, padx=50)
+
+
+# Botón Calcular 
+boton_calcular = tkinter.Button(cont_Info, text="Calcular", font=("Arial", 13, "bold"), bg=RGB_Hexadecimal(0, 255, 127), relief="raised", command=lambda: print("Cálculo realizado"))
+boton_calcular.grid(row=7, column=0, columnspan=4, pady=10)
+
+#Gráfica
+# Espacio para la gráfica dentro de cont_Info
+titulo_grafica = tkinter.Label(cont_Info, text="Gráfica del Interés Compuesto", font=("Arial", 15, "bold"))
+titulo_grafica.grid(row=8, column=0, columnspan=2, pady=10)
+
+# Canvas
+canvas_grafica = tkinter.Canvas(cont_Info, width=400, height=200, bg="white", relief="solid", bd=2)
+canvas_grafica.grid(row=9, column=0, columnspan=2, pady=10)
+
+# Actualizar las coordenadas de los elementos dibujados
+canvas_grafica.create_line(30, 180, 380, 180, width=2, arrow=tkinter.LAST)  # Eje X
+canvas_grafica.create_line(30, 180, 30, 20, width=2, arrow=tkinter.LAST)   # Eje Y
+canvas_grafica.create_text(200, 10, text="Gráfica del Capital", font=("Arial", 10), fill="blue")
+canvas_grafica.create_line(30, 180, 80, 150, 130, 120, 180, 90, 230, 60, width=2, fill="red")
+
+
+
+#Valor final
+valorfinal = tkinter.Label(cont_Info, text="Valor Final", font=("Arial", 15, "bold"))
+valorfinal.grid(row=8,column=2,columnspan=2, pady= 10)
+
+#Label resultado final
+resultado_final = tkinter.Label(cont_Info, text="ASDDD", font=("Arial", 16))
+resultado_final.grid(row=9,column=2,columnspan=2, pady= 1)
+
+# Obtener dimensiones de la pantalla
+ancho_pantalla = ventana.winfo_screenwidth()
+alto_pantalla = ventana.winfo_screenheight()
+
+# Dimensiones de la ventana
+ancho_ventana = 900
+alto_ventana = 750
+
+# Coordenadas para centrar la ventana y moverla ligeramente hacia arriba
+x = int((ancho_pantalla / 2) - (ancho_ventana / 2))
+y = int((alto_pantalla / 2) - (alto_ventana / 2)) - 50  # Mover 50 píxeles hacia arriba
+
+# Configurar posición y tamaño de la ventana
+ventana.geometry(f"{ancho_ventana}x{alto_ventana}+{x}+{y}")
+ventana.config(background=RGB_Hexadecimal(255, 250, 250))
+ventana.title("Calculadora de Interés Compuesto")
+
 
 ventana.mainloop() 
 
