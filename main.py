@@ -1,22 +1,41 @@
-#import interes
+import tkinter.messagebox
+import interes
 import tkinter 
-
-#Inicializacion de la ventana principal 
-v0 = 100      # Depósito inicial
-isem = 8/52      # Tasa de interés semanal (%)
-n = 52        # Número de semanas
-asem = 5      # Aporte semanal
-
-#final = interes.interes()
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 
-#final = interes.interes(v0,isem,n,asem)
 
 #Devolver de decimal a hexadecimal el espectro RGB
 def RGB_Hexadecimal (rojo:int, verde:int, azul:int): 
     colorRGB="#%02x%02x%02x" % (rojo, verde, azul)
     return colorRGB
 
+#Calcular el interes compuesto recopilando todos los datos:
+def CalculoInteresCompuesto():
+    try:
+        v0= float(entry_aporteInicial.get())
+        frecuenciaSeleccionada = frecuencia_variable.get()
+        ianual = float(entry_interesAnual.get())
+
+        if frecuenciaSeleccionada=="":
+            ianual = ianual/12
+        else:
+            ianual = ianual/int(frecuenciaSeleccionada)
+        
+        n = int(entry_NumeroPeriodosTranscurridos.get())
+        asem = float(entry_aporteSem.get())
+        interes_compuesto = interes.interes(v0,ianual,n,asem)
+        valor_final = interes_compuesto.valorFinal(n)
+        resultado_final.configure(text=str(round(valor_final,4)))
+        interes_compuesto.grafica()
+        ventana.update_idletasks()
+    except Exception as e:
+        tkinter.messagebox.showerror("Error","Error al ingresar los datos:\n"+str(e))
+
+
+
+
+#Inicializacion de la ventana principal 
 #Ventana Principal del programa
 ventana = tkinter.Tk() 
 #Confirguracion del tamaño de la ventana
@@ -51,7 +70,7 @@ cont_Info.pack(pady=10,padx=15,fill=tkinter.BOTH)
 
 
 # Crear los radio buttons con bordes y color personalizable
-opciones = [("Semanal", "semanal"), ("Mensual", "mensual"), ("Trimestral", "trimestral"), ("Bimestral", "bimestral")]
+opciones = [("Semanal", 52), ("Mensual", 12), ("Trimestral", 4), ("Bimestral", 6)]
 
 # Variables para los radio buttons
 frecuencia_variable = tkinter.StringVar(value=" ")
@@ -102,33 +121,18 @@ entry_NumeroPeriodosTranscurridos.grid(row=6, column = 1, padx=50)
 
 
 # Botón Calcular 
-boton_calcular = tkinter.Button(cont_Info, text="Calcular", font=("Arial", 13, "bold"), bg=RGB_Hexadecimal(0, 255, 127), relief="raised", command=lambda: print("Cálculo realizado"))
+boton_calcular = tkinter.Button(cont_Info, text="Calcular", font=("Arial", 13, "bold"), bg=RGB_Hexadecimal(0, 255, 127), relief="raised", command=CalculoInteresCompuesto)
 boton_calcular.grid(row=7, column=0, columnspan=4, pady=10)
-
-#Gráfica
-# Espacio para la gráfica dentro de cont_Info
-titulo_grafica = tkinter.Label(cont_Info, text="Gráfica del Interés Compuesto", font=("Arial", 15, "bold"))
-titulo_grafica.grid(row=8, column=0, columnspan=2, pady=10)
-
-# Canvas
-canvas_grafica = tkinter.Canvas(cont_Info, width=400, height=200, bg="white", relief="solid", bd=2)
-canvas_grafica.grid(row=9, column=0, columnspan=2, pady=10)
-
-# Actualizar las coordenadas de los elementos dibujados
-canvas_grafica.create_line(30, 180, 380, 180, width=2, arrow=tkinter.LAST)  # Eje X
-canvas_grafica.create_line(30, 180, 30, 20, width=2, arrow=tkinter.LAST)   # Eje Y
-canvas_grafica.create_text(200, 10, text="Gráfica del Capital", font=("Arial", 10), fill="blue")
-canvas_grafica.create_line(30, 180, 80, 150, 130, 120, 180, 90, 230, 60, width=2, fill="red")
-
-
 
 #Valor final
 valorfinal = tkinter.Label(cont_Info, text="Valor Final", font=("Arial", 15, "bold"))
-valorfinal.grid(row=8,column=2,columnspan=2, pady= 10)
+valorfinal.grid(row=8,column=1, pady= 10)
 
 #Label resultado final
-resultado_final = tkinter.Label(cont_Info, text="ASDDD", font=("Arial", 16))
-resultado_final.grid(row=9,column=2,columnspan=2, pady= 1)
+resultado_final = tkinter.Label(cont_Info, text="", font=("Arial", 16))
+dinero = tkinter.Label(cont_Info,text="$",font=("Arial", 16,"bold"))
+resultado_final.grid(row=9,column=1, pady= 10)
+dinero.grid(row=9,column=3)
 
 # Obtener dimensiones de la pantalla
 ancho_pantalla = ventana.winfo_screenwidth()
